@@ -3,7 +3,7 @@ body {
     padding: 0;
     background-color: #000000;
     font-family: Arial, sans-serif;
-    overflow: hidden; /* Prevent scrollbars */
+    overflow: hidden;
     /* background: linear-gradient(to right, #b8cbb8 0%, #b8cbb8 0%, #b465da 0%, #cf6cc9 33%, #ee609c 66%, #ee609c 100%); */
 }
 .clock-container{
@@ -52,8 +52,11 @@ body {
     right: 10px;
     z-index: 9999;
 }
+#exit-fullscreen-button {
+    display: none;
+  }
 #day-date {
-    display: inline;
+    display: inline-block;
     font-size: 55px;
     color: #1d8348;
     text-align: center;

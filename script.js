@@ -29,7 +29,6 @@ function updateTime() {
         });
 }
 
-
 function updateTemperature(latitude, longitude) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=08c7a7fa838732dbc0e72b99cfbcbe8e&units=metric`)
         .then(response => response.json())
@@ -60,10 +59,12 @@ function getLocation() {
     }
 }
 
-
 function toggleFullScreen() {
-    if (!document.fullscreenElement &&  
-        !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {  // current working methods
+    const fullscreenButton = document.getElementById('fullscreen-button');
+    const exitFullscreenButton = document.getElementById('exit-fullscreen-button');
+
+    if (!document.fullscreenElement && !document.mozFullScreenElement &&
+        !document.webkitFullscreenElement && !document.msFullscreenElement) {  
         if (document.documentElement.requestFullscreen) {
             document.documentElement.requestFullscreen();
         } else if (document.documentElement.msRequestFullscreen) {
@@ -73,6 +74,8 @@ function toggleFullScreen() {
         } else if (document.documentElement.webkitRequestFullscreen) {
             document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
         }
+        fullscreenButton.style.display = 'none';
+        exitFullscreenButton.style.display = ''; // Show exit fullscreen button
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -87,7 +90,20 @@ function toggleFullScreen() {
 }
 
 document.getElementById('fullscreen-button').addEventListener('click', toggleFullScreen);
+document.getElementById('exit-fullscreen-button').addEventListener('click', toggleFullScreen);
 
+document.addEventListener('fullscreenchange', function () {
+    const fullscreenButton = document.getElementById('fullscreen-button');
+    const exitFullscreenButton = document.getElementById('exit-fullscreen-button');
+    if (document.fullscreenElement || document.mozFullScreenElement ||
+        document.webkitFullscreenElement || document.msFullscreenElement) {
+        fullscreenButton.style.display = 'none';
+        exitFullscreenButton.style.display = '';
+    } else {
+        fullscreenButton.style.display = '';
+        exitFullscreenButton.style.display = 'none';
+    }
+});
 
 setInterval(updateTime, 1000);
 getLocation();
