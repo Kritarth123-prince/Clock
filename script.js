@@ -1,3 +1,48 @@
+const themeToggleButton = document.getElementById('theme-toggle');
+const body = document.body;
+let isDarkMode = false;
+
+body.classList.add('light-mode');
+
+themeToggleButton.addEventListener('click', () => {
+    if (isDarkMode) {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+    } else {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+    }
+
+    isDarkMode = !isDarkMode;
+});
+
+const fullscreenButton = document.getElementById('fullscreen-button');
+const exitFullscreenButton = document.getElementById('exit-fullscreen-button');
+
+function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().then(() => {
+            fullscreenButton.style.display = 'none';
+            exitFullscreenButton.style.display = 'block';
+        });
+    } else {
+        document.exitFullscreen().then(() => {
+            fullscreenButton.style.display = 'block';
+            exitFullscreenButton.style.display = 'none';
+        });
+    }
+}
+
+fullscreenButton.addEventListener('click', toggleFullScreen);
+exitFullscreenButton.addEventListener('click', toggleFullScreen);
+
+document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+        fullscreenButton.style.display = 'block';
+        exitFullscreenButton.style.display = 'none';
+    }
+});
+
 function updateTime() {
     fetch('https://worldtimeapi.org/api/ip')
         .then(response => response.json())
@@ -17,15 +62,6 @@ function updateTime() {
         })
         .catch(error => {
             console.error('Error fetching time:', error);
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const day = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][now.getDay()];
-            const date = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-            document.getElementById('day-date').textContent = `${day} ${date}/${month}`;
         });
 }
 
@@ -50,60 +86,11 @@ function getLocation() {
             updateTemperature(latitude, longitude);
         }, error => {
             console.error('Error getting location:', error);
-            document.getElementById('temperature').textContent = 'Unable to retrieve location';
-            setTimeout(getLocation, 5000);
         });
     } else {
         console.error('Geolocation is not supported by this browser.');
-        document.getElementById('temperature').textContent = 'Geolocation is not supported';
     }
 }
-
-function toggleFullScreen() {
-    const fullscreenButton = document.getElementById('fullscreen-button');
-    const exitFullscreenButton = document.getElementById('exit-fullscreen-button');
-
-    if (!document.fullscreenElement && !document.mozFullScreenElement &&
-        !document.webkitFullscreenElement && !document.msFullscreenElement) {  
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen();
-        } else if (document.documentElement.msRequestFullscreen) {
-            document.documentElement.msRequestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) {
-            document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) {
-            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-        }
-        fullscreenButton.style.display = 'none';
-        exitFullscreenButton.style.display = ''; // Show exit fullscreen button
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        }
-    }
-}
-
-document.getElementById('fullscreen-button').addEventListener('click', toggleFullScreen);
-document.getElementById('exit-fullscreen-button').addEventListener('click', toggleFullScreen);
-
-document.addEventListener('fullscreenchange', function () {
-    const fullscreenButton = document.getElementById('fullscreen-button');
-    const exitFullscreenButton = document.getElementById('exit-fullscreen-button');
-    if (document.fullscreenElement || document.mozFullScreenElement ||
-        document.webkitFullscreenElement || document.msFullscreenElement) {
-        fullscreenButton.style.display = 'none';
-        exitFullscreenButton.style.display = '';
-    } else {
-        fullscreenButton.style.display = '';
-        exitFullscreenButton.style.display = 'none';
-    }
-});
 
 setInterval(updateTime, 1000);
 getLocation();

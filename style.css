@@ -1,19 +1,17 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #000000;
     font-family: Arial, sans-serif;
     overflow: hidden;
-    /* background: linear-gradient(to right, #b8cbb8 0%, #b8cbb8 0%, #b465da 0%, #cf6cc9 33%, #ee609c 66%, #ee609c 100%); */
 }
-.clock-container{
+
+.clock-container {
     height: 50vh;
     width: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-size: cover;
 }
 
 .container {
@@ -26,23 +24,22 @@ body {
 
 #clock {
     font-size: 18vw;
-    color: #1d8348;
     font-weight: bold;
     text-align: center;
     width: fit-content;
 }
 
 #temperature {
-    font-size: 2vw;
-    color: #1d8348;
+    font-size: 55px;
     margin-left: 20px;
     white-space: nowrap;
     display: inline;
-    font-size: 55px;
 }
-#fullscreen-button {
+
+#fullscreen-button, 
+#exit-fullscreen-button {
     background-color: #000000;
-    color: #0a4f84;
+    color: #ffffff;
     border: none;
     padding: 10px;
     border-radius: 5px;
@@ -52,18 +49,66 @@ body {
     right: 10px;
     z-index: 9999;
 }
+
 #exit-fullscreen-button {
     display: none;
-  }
+}
+
 #day-date {
     display: inline-block;
     font-size: 55px;
-    color: #1d8348;
     text-align: center;
     letter-spacing: 3px;
 }
-.container_2{
+
+.container_2 {
     display: flex;
+}
+
+body.light-mode {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.dark-mode {
+    background-color: #000000;
+    color: #1d8348;
+}
+
+#clock, #day-date, #temperature {
+    color: inherit;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+body.light-mode .theme-toggle svg {
+    stroke: #000000;
+}
+
+body.dark-mode .theme-toggle svg {
+    stroke: #ffffff;
+}
+
+body.light-mode #fullscreen-button,
+body.light-mode #exit-fullscreen-button {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+body.dark-mode #fullscreen-button,
+body.dark-mode #exit-fullscreen-button {
+    background-color: #ffffff;
+    color: #000000;
 }
 
 @media screen and (max-width: 850px) {
@@ -75,20 +120,24 @@ body {
         font-size: 55px;
         margin-left: 10px;
     }
-    .container_2{
+
+    .container_2 {
         display: flex;
         flex-direction: column;
     }
 }
+
 @media screen and (max-width: 600px) {
     #clock {
         font-size: 5rem;
     }
+
     #temperature {
         font-size: 40px;
         margin-left: 10px;
     }
-    .container_2{
+
+    .container_2 {
         display: flex;
         flex-direction: column;
     }
@@ -98,10 +147,12 @@ body {
     #clock {
         font-size: 60px;
     }
+
     #temperature {
         font-size: 30px;
         margin-left: 5px;
     }
+
     #day-date {
         font-size: 34px;
     }

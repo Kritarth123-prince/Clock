@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
-<body>
+<body class="light-mode">
     <div class="container">
         <div class="clock-container">
             <div id="clock"></div>
@@ -19,14 +19,27 @@
             </div>
         </div>
         <button id="fullscreen-button"><i class="fas fa-expand"></i></button>
-        <button id="exit-fullscreen-button" style="display: none;"><i class="far fa-compress"></i></button>
+        <button id="exit-fullscreen-button" style="display: none;"><i class="fas fa-compress"></i></button>
+
+        <button id="theme-toggle" class="theme-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun svg">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        </button>
     </div>
 
     <script src="script.js"></script>
 </body>
 
 </html>
-
 
 
 <!--   Weather API:-   08c7a7fa838732dbc0e72b99cfbcbe8e -->
